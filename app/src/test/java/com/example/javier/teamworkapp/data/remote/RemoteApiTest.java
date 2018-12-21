@@ -1,0 +1,78 @@
+package com.example.javier.teamworkapp.data.remote;
+
+import com.example.javier.teamworkapp.data.entity.ProjectEntity;
+import com.example.javier.teamworkapp.data.entity.data.FakeRemoteAPI;
+import com.google.gson.Gson;
+import io.reactivex.Scheduler;
+import io.reactivex.android.plugins.RxAndroidPlugins;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.internal.schedulers.ExecutorScheduler;
+import io.reactivex.observers.TestObserver;
+import io.reactivex.plugins.RxJavaPlugins;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import java.util.concurrent.TimeUnit;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+
+public class RemoteApiTest {
+
+    ProjectEntity projectEntity;
+    MockWebServer mockWebServer;
+
+    @Before
+    public void setUp() {
+        projectEntity =  FakeRemoteAPI.getProject();
+        mockWebServer = new MockWebServer();
+    }
+
+    @BeforeClass
+    public static void setUpRxSchedulers() {
+        Scheduler immediate = new Scheduler() {
+            @Override
+            public Disposable scheduleDirect(@NonNull Runnable run, long delay, @NonNull TimeUnit unit) {
+                // this prevents StackOverflowErrors when scheduling with a delay
+                return super.scheduleDirect(run, 0, unit);
+            }
+
+            @Override
+            public Worker createWorker() {
+                return new ExecutorScheduler.ExecutorWorker(Runnable::run);
+            }
+        };
+
+        RxJavaPlugins.setInitIoSchedulerHandler(scheduler -> immediate);
+        RxJavaPlugins.setInitComputationSchedulerHandler(scheduler -> immediate);
+        RxJavaPlugins.setInitNewThreadSchedulerHandler(scheduler -> immediate);
+        RxJavaPlugins.setInitSingleSchedulerHandler(scheduler -> immediate);
+        RxAndroidPlugins.setInitMainThreadSchedulerHandler(scheduler -> immediate);
+    }
+
+    @Test
+    public void severCallWithError() {
+        //Given
+        String url = "https://yat.teamwork.com/";
+        mockWebServer.enqueue(new MockResponse().setBody(new Gson().toJson(projectEntity)));
+        Retrofit retrofit = new Retrofit.Builder()
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(mockWebServer.url(url))
+                .build();
+        RemoteApi remoteDataSource = new RemoteImpl(retrofit);
+
+        TestObserver<ProjectEntity> testObserver = remoteDataSource.getProjectEntity().test();
+
+        testObserver.hasSubscription();
+        assertThat(testObserver.errors(), is(notNullValue()));
+    }
+}
