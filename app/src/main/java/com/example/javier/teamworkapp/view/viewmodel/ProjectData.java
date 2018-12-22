@@ -1,7 +1,6 @@
-package com.example.javier.teamworkapp.domain.model;
+package com.example.javier.teamworkapp.view.viewmodel;
 
-public class SortProject {
-
+public class ProjectData {
     private String name;
 
     private String description;
@@ -81,4 +80,5 @@ public class SortProject {
     public void setStatus(String status) {
         this.status = status;
     }
+
 }

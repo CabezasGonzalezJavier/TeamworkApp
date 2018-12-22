@@ -5,6 +5,8 @@ import com.example.javier.teamworkapp.data.repository.datasource.mapper.ProjectD
 import com.example.javier.teamworkapp.domain.model.ProjectDomain;
 import io.reactivex.Observable;
 
+import java.util.List;
+
 public class RepositoyImpl implements Repository {
     private final DataSource dataSource;
     private final ProjectDomainToProjectEntityMapper projectDomainToProjectMapper;
@@ -15,7 +17,7 @@ public class RepositoyImpl implements Repository {
     }
 
     @Override
-    public Observable<ProjectDomain> getProject() {
+    public Observable<List<ProjectDomain>> getProject() {
         return dataSource.getProjectEntity().map(projectDomainToProjectMapper::reverseMap);
     }
 }

@@ -27,16 +27,15 @@ public class ProjectToProjectEntityMapperTest { public static final String FAKE_
 
     @Test
     public void givenTransformCollectionProjectEntityCorrectly() throws Exception {
-        ProjectEntity project = FakeRemoteAPI.getProject();
+        Project project = FakeRemoteAPI.getProject();
         ProjectDomain projectDomain = mapper.reverseMap(project);
         assertThat(projectDomain, is(instanceOf(ProjectDomain.class)));
-        assertThat(projectDomain.getStatus(), is(FAKE_PROJECT_STATUS));
-        assertThat(projectDomain.getSortProjectList().get(0).getName(), is(FAKE_PROJECT_NAME));
-        assertThat(projectDomain.getSortProjectList().get(0).getDescription(), is(FAKE_PROJECT_DESCRIPTION));
-        assertThat(projectDomain.getSortProjectList().get(0).getCreate(), is(FAKE_PROJECT_CREATE));
-        assertThat(projectDomain.getSortProjectList().get(0).getEnd(), is(FAKE_PROJECT_END));
-        assertThat(projectDomain.getSortProjectList().get(0).getLogo(), is(FAKE_PROJECT_LOGO));
-        assertThat(projectDomain.getSortProjectList().get(0).getStart(), is(FAKE_PROJECT_START));
+        assertThat(projectDomain.getName(), is(FAKE_PROJECT_NAME));
+        assertThat(projectDomain.getDescription(), is(FAKE_PROJECT_DESCRIPTION));
+        assertThat(projectDomain.getCreate(), is(FAKE_PROJECT_CREATE));
+        assertThat(projectDomain.getEnd(), is(FAKE_PROJECT_END));
+        assertThat(projectDomain.getLogo(), is(FAKE_PROJECT_LOGO));
+        assertThat(projectDomain.getStart(), is(FAKE_PROJECT_START));
     }
 
     @Test

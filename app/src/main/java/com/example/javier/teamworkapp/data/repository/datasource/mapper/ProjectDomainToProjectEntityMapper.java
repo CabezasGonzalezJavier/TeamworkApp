@@ -1,42 +1,35 @@
 package com.example.javier.teamworkapp.data.repository.datasource.mapper;
 
-import com.example.javier.teamworkapp.data.entity.ProjectEntity;
+import com.example.javier.teamworkapp.Utils;
+import com.example.javier.teamworkapp.data.entity.Project;
 import com.example.javier.teamworkapp.domain.model.ProjectDomain;
-import com.example.javier.teamworkapp.domain.model.SortProject;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class ProjectDomainToProjectEntityMapper extends Mapper<ProjectDomain, ProjectEntity>{
+public class ProjectDomainToProjectEntityMapper extends Mapper<ProjectDomain, Project> {
 
     @Inject
-    public ProjectDomainToProjectEntityMapper(){
+    public ProjectDomainToProjectEntityMapper() {
     }
 
     @Override
-    public ProjectEntity map(ProjectDomain value) {
+    public Project map(ProjectDomain value) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public ProjectDomain reverseMap(ProjectEntity value) {
-
+    public ProjectDomain reverseMap(Project value) {
         ProjectDomain projectDomain = new ProjectDomain();
-        projectDomain.setStatus(value.getSTATUS());
-        List<SortProject> list = new ArrayList<>();
-        for (int i=0; i<value.getProjects().size(); i++) {
-            SortProject sortProject = new SortProject();
-            sortProject.setName(value.getProjects().get(i).getName());
-            sortProject.setDescription(value.getProjects().get(i).getDescription());
-            sortProject.setLogo(value.getProjects().get(i).getLogo());
-            sortProject.setStart(value.getProjects().get(i).getStartDate());
-            sortProject.setEnd(value.getProjects().get(i).getEndDate());
-            sortProject.setCreate(value.getProjects().get(i).getCreatedOn());
-            sortProject.setLastChange(value.getProjects().get(i).getLastChangedOn());
-            list.add(sortProject);
-        }
-        projectDomain.setSortProjectList(list);
+        projectDomain.setName(value.getName());
+        projectDomain.setDescription(value.getDescription());
+        projectDomain.setLogo(value.getLogo());
+        projectDomain.setStart(Utils.convertTimeStampToString(value.getStartDate()));
+        projectDomain.setEnd(Utils.convertTimeStampToString(value.getEndDate()));
+        projectDomain.setCreate(value.getCreatedOn());
+        projectDomain.setLastChange(value.getLastChangedOn());
+
         return projectDomain;
     }
 }

@@ -1,14 +1,15 @@
 package com.example.javier.teamworkapp.data.repository.datasource;
 
-import android.util.Base64;
+import com.example.javier.teamworkapp.Utils;
+import com.example.javier.teamworkapp.data.entity.Project;
 import com.example.javier.teamworkapp.data.entity.ProjectEntity;
 import com.example.javier.teamworkapp.data.remote.RemoteApi;
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
-import java.io.UnsupportedEncodingException;
-
-import static com.example.javier.teamworkapp.Constants.API_PASSWORD;
-import static com.example.javier.teamworkapp.Constants.API_USER_NAME;
+import java.util.List;
 
 public class RemoteApiDataSource implements DataSource {
 
@@ -19,17 +20,26 @@ public class RemoteApiDataSource implements DataSource {
     }
 
     @Override
-    public Observable<ProjectEntity> getProjectEntity() {
-        return remoteApi.getProjectEntity(getAuthStringUser());
+    public Observable<List<Project>> getProjectEntity() {
+        return Observable.create(emitter ->
+                remoteApi.getProjectEntity(Utils.getAuthStringUser()).subscribeOn(Schedulers.io())
+                .cache()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<ProjectEntity>() {
+                    @Override
+                    public void onNext(ProjectEntity projectEntity) {
+                        emitter.onNext(projectEntity.getProjects());
+                    }
+                    @Override
+                        public void onError(Throwable e) {
+                            emitter.onError(e);
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            emitter.onComplete();
+                        }
+                    }));
     }
 
-    private static String getAuthStringUser() {
-        byte[] data = new byte[0];
-        try {
-            data = (API_USER_NAME + ":" + API_PASSWORD).getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return "Basic " + Base64.encodeToString(data, Base64.NO_WRAP);
-    }
 }
