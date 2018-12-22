@@ -7,9 +7,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import javax.inject.Inject;
 
+import static com.example.javier.teamworkapp.Constants.URL_BASE;
+
 public class RemoteDataSourceFactory {
 
-    public static final String URL_BASE = "https://yat.teamwork.com/";
+
     @Inject
     public RemoteDataSourceFactory(){
 

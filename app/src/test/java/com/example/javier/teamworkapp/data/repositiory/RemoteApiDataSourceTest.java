@@ -30,14 +30,14 @@ public class RemoteApiDataSourceTest {
     public void verifyGetProject() {
         remoteApiDataSource.getProjectEntity();
 
-        verify(remoteApi).getProjectEntity();
+        verify(remoteApi).getProjectEntity("");
     }
 
     @Test
     public void givenAnObservableGetProjectEntity(){
         ProjectEntity projectEntityList =  FakeRemoteAPI.getProject();
         Observable<ProjectEntity> fakeObservable = Observable.just(projectEntityList);
-        given(remoteApi.getProjectEntity()).willReturn(fakeObservable);
+        given(remoteApi.getProjectEntity("")).willReturn(fakeObservable);
     }
 
 }

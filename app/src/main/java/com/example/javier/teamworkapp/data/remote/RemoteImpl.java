@@ -20,9 +20,9 @@ public class RemoteImpl implements RemoteApi {
     }
 
     @Override
-    public Observable<ProjectEntity> getProjectEntity() {
-        return  Observable.create(emitter ->
-                remoteApi.getProjectEntity().subscribeOn(Schedulers.io())
+    public Observable<ProjectEntity> getProjectEntity(String authkey) {
+        return Observable.create(emitter ->
+                remoteApi.getProjectEntity(authkey).subscribeOn(Schedulers.io())
                         .cache()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new DisposableObserver<ProjectEntity>() {

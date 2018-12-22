@@ -1,10 +1,14 @@
 package com.example.javier.teamworkapp.data.entity.data;
 
+import android.util.Base64;
 import com.example.javier.teamworkapp.data.entity.Project;
 import com.example.javier.teamworkapp.data.entity.ProjectEntity;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.javier.teamworkapp.Constants.API_KEY;
 
 public class FakeRemoteAPI {
 
@@ -42,4 +46,6 @@ public class FakeRemoteAPI {
 
         return projectEntity;
     }
+
+
 }

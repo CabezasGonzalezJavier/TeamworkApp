@@ -12,7 +12,6 @@ public class ProjectDomainToProjectEntityMapper extends Mapper<ProjectDomain, Pr
 
     @Inject
     public ProjectDomainToProjectEntityMapper(){
-
     }
 
     @Override
@@ -40,6 +39,4 @@ public class ProjectDomainToProjectEntityMapper extends Mapper<ProjectDomain, Pr
         projectDomain.setSortProjectList(list);
         return projectDomain;
     }
-
-
 }
