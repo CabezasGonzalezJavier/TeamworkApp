@@ -23,7 +23,7 @@ I have used a simple attempt at Clean Architecture.
 
 ## Version control
 
-Ihave used git to version files in this project. Normally I use gitflow to create features, releases and hotfixes.
+I have used git to version files in this project. Normally I use gitflow to create features, releases and hotfixes.
 
 ## Design
 
