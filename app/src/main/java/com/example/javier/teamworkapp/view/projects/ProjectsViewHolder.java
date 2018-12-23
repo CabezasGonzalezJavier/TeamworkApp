@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.javier.teamworkapp.R;
 import com.example.javier.teamworkapp.view.viewmodel.ProjectViewModel;
 
@@ -44,7 +45,7 @@ public class ProjectsViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void getImage(String photo, ImageView photoImageView) {
-        Glide.with(getContext()).load(photo).into(photoImageView);
+        Glide.with(getContext()).load(photo).apply(new RequestOptions().circleCrop()).into(photoImageView);
     }
 
     private Context getContext() {
@@ -52,6 +53,7 @@ public class ProjectsViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void onItemClick(final ProjectViewModel projectViewModel) {
-
+        itemView.setOnClickListener((View v)->
+                presenter.onProjectClicked(projectViewModel));
     }
 }

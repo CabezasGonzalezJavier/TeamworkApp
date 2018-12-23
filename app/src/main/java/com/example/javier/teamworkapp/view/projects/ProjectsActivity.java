@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 import com.example.javier.teamworkapp.ProjectApplication;
 import com.example.javier.teamworkapp.R;
 import com.example.javier.teamworkapp.view.base.BaseActivity;
+import com.example.javier.teamworkapp.view.detail.DetailActivity;
 import com.example.javier.teamworkapp.view.viewmodel.ProjectViewModel;
 
 import java.util.List;
@@ -64,6 +65,19 @@ public class ProjectsActivity extends BaseActivity implements ProjectsPresenter.
     public void showProjects(List<ProjectViewModel> list) {
         adapter.addAll(list);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void openProjectScreen(ProjectViewModel projectViewModel) {
+        DetailActivity.open(ProjectsActivity.this,
+                projectViewModel.getName(),
+                projectViewModel.getLogo(),
+                projectViewModel.getDescription(),
+                projectViewModel.getCreate(),
+                projectViewModel.getStart(),
+                projectViewModel.getEnd(),
+                projectViewModel.getLastChange(),
+                projectViewModel.getStatus());
     }
 
     @Override

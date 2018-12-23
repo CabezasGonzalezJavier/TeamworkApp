@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TeamworkApp</string>
+    <string name="start">Start date:</string>
+    <string name="end">End date:</string>
+    <string name="create">Create date:</string>
+    <string name="last">Last changed:</string>
+    <string name="status">Status:</string>
 </resources>

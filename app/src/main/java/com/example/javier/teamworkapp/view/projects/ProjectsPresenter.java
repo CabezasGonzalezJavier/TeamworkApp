@@ -48,8 +48,14 @@ public class ProjectsPresenter extends BasePresenter<ProjectsPresenter.View> {
         });
     }
 
+    public void onProjectClicked(ProjectViewModel projectViewModel) {
+        getView().openProjectScreen(projectViewModel);
+    }
+
     public interface View extends BasePresenter.View {
 
-        void showProjects(List<ProjectViewModel> teamList);
+        void showProjects(List<ProjectViewModel> projectList);
+
+        void openProjectScreen(ProjectViewModel projectViewModel);
     }
 }
