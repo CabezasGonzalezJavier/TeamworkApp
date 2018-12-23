@@ -27,8 +27,8 @@ public class ProjectDomainToProjectEntityMapper extends Mapper<ProjectDomain, Pr
         projectDomain.setLogo(value.getLogo());
         projectDomain.setStart(Utils.convertTimeStampToString(value.getStartDate()));
         projectDomain.setEnd(Utils.convertTimeStampToString(value.getEndDate()));
-        projectDomain.setCreate(value.getCreatedOn());
-        projectDomain.setLastChange(value.getLastChangedOn());
+        projectDomain.setCreate(Utils.convertStringDateToString(value.getCreatedOn()));
+        projectDomain.setLastChange(Utils.convertStringDateToString(value.getLastChangedOn()));
 
         return projectDomain;
     }

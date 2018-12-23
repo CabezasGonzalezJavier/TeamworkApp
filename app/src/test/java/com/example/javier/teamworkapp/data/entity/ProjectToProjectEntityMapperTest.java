@@ -32,10 +32,11 @@ public class ProjectToProjectEntityMapperTest { public static final String FAKE_
         assertThat(projectDomain, is(instanceOf(ProjectDomain.class)));
         assertThat(projectDomain.getName(), is(FAKE_PROJECT_NAME));
         assertThat(projectDomain.getDescription(), is(FAKE_PROJECT_DESCRIPTION));
-        assertThat(projectDomain.getCreate(), is(FAKE_PROJECT_CREATE));
-        assertThat(projectDomain.getEnd(), is(FAKE_PROJECT_END));
+        assertThat(projectDomain.getCreate(), is("12.06.2018 19:30:44"));
+        assertThat(projectDomain.getLastChange(), is("12.06.2018 19:30:44"));
+        assertThat(projectDomain.getEnd(), is("22.08.1970 14:45:15"));
         assertThat(projectDomain.getLogo(), is(FAKE_PROJECT_LOGO));
-        assertThat(projectDomain.getStart(), is(FAKE_PROJECT_START));
+        assertThat(projectDomain.getStart(), is("22.08.1970 14:45:15"));
     }
 
     @Test

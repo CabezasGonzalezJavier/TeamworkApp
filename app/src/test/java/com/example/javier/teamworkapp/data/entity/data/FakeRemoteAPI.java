@@ -15,8 +15,8 @@ public class FakeRemoteAPI {
     public static final String FAKE_PROJECT_NAME = "name";
     public static final String FAKE_PROJECT_DESCRIPTION = "description";
     public static final String FAKE_PROJECT_CREATE = "2018-06-12T17:30:44Z";
-    public static final String FAKE_PROJECT_START = "20140405";
-    public static final String FAKE_PROJECT_END = "20181016";
+    public static final String FAKE_PROJECT_START = "20180715";
+    public static final String FAKE_PROJECT_END = "20180715";
     public static final String FAKE_PROJECT_LAST_CHANGE = "2018-06-12T17:30:44Z";
     public static final String FAKE_PROJECT_STATUS = "STATUS";
     public static final String FAKE_PROJECT_LOGO = "logo";
